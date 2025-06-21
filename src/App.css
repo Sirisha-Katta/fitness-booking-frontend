@@ -1,0 +1,398 @@
+/* Modern animated background with moving particles */
+body {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a2e 25%, #16213e 50%, #0f3460 75%, #0a0a0a 100%);
+    background-size: 400% 400%;
+    animation: gradientShift 15s ease infinite;
+    color: #ffffff;
+    min-height: 100vh;
+    margin: 0;
+    font-family: 'Segoe UI', 'Inter', Arial, sans-serif;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Animated gradient background */
+@keyframes gradientShift {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
+
+/* Floating particles animation */
+body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        radial-gradient(2px 2px at 20px 30px, rgba(160, 217, 239, 0.3), transparent),
+        radial-gradient(2px 2px at 40px 70px, rgba(160, 217, 239, 0.2), transparent),
+        radial-gradient(1px 1px at 90px 40px, rgba(160, 217, 239, 0.4), transparent),
+        radial-gradient(1px 1px at 130px 80px, rgba(160, 217, 239, 0.3), transparent),
+        radial-gradient(2px 2px at 160px 30px, rgba(160, 217, 239, 0.2), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: float 20s linear infinite;
+    pointer-events: none;
+    z-index: -1;
+}
+
+@keyframes float {
+    0% { transform: translateY(0px) translateX(0px); }
+    33% { transform: translateY(-30px) translateX(10px); }
+    66% { transform: translateY(-60px) translateX(-10px); }
+    100% { transform: translateY(-100px) translateX(0px); }
+}
+
+.app-center {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem 0;
+}
+
+/* Glowing headers with text animation */
+h1, h2, h3 {
+    color: #ffffff;
+    text-align: center;
+    font-weight: 700;
+    letter-spacing: 1px;
+    text-shadow: 0 0 20px rgba(160, 217, 239, 0.5);
+    position: relative;
+    animation: glow 2s ease-in-out infinite alternate;
+}
+
+@keyframes glow {
+    from { text-shadow: 0 0 20px rgba(160, 217, 239, 0.5); }
+    to { text-shadow: 0 0 30px rgba(160, 217, 239, 0.8), 0 0 40px rgba(160, 217, 239, 0.3); }
+}
+
+/* Glassmorphism cards with hover effects */
+form, .user-icon, .timezone-filter, .bookings-list, .classes-list {
+    background: rgba(24, 24, 24, 0.8);
+    backdrop-filter: blur(20px);
+    border: 1px solid rgba(160, 217, 239, 0.2);
+    padding: 2rem 1.5rem;
+    border-radius: 20px;
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(160, 217, 239, 0.1),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+    margin: 1rem auto;
+    max-width: 400px;
+    width: 100%;
+    position: relative;
+    transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow: hidden;
+}
+
+/* Make form and user-icon (login) divs bigger */
+form, .user-icon {
+    max-width: 600px;
+    padding: 3rem 2.5rem;
+}
+
+
+/* Hover effect for cards */
+form:hover, .user-icon:hover, .timezone-filter:hover, 
+.bookings-list:hover, .classes-list:hover {
+    transform: translateY(-5px) scale(1.02);
+    box-shadow: 
+        0 20px 40px rgba(0, 0, 0, 0.5),
+        0 0 0 1px rgba(160, 217, 239, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.2);
+    border-color: rgba(160, 217, 239, 0.4);
+}
+
+/* Shimmer effect on cards */
+form::before, .user-icon::before, .timezone-filter::before,
+.bookings-list::before, .classes-list::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(
+        90deg,
+        transparent,
+        rgba(160, 217, 239, 0.1),
+        transparent
+    );
+    transition: left 0.5s;
+}
+
+form:hover::before, .user-icon:hover::before,
+.timezone-filter:hover::before, .bookings-list:hover::before,
+.classes-list:hover::before {
+    left: 100%;
+}
+
+/* Enhanced input fields */
+input, select {
+    padding: 1rem;
+    margin: 0.5rem 0 1rem 0;
+    border-radius: 12px;
+    border: 2px solid rgba(160, 217, 239, 0.2);
+    font-size: 1rem;
+    background: rgba(34, 34, 34, 0.6);
+    color: #ffffff;
+    backdrop-filter: blur(10px);
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+}
+select {
+    width: 100%;
+}
+input {
+    width: 90%;
+}
+input:focus, select:focus {
+    outline: none;
+    border-color: #a0d9ef;
+    box-shadow: 
+        0 0 0 3px rgba(160, 217, 239, 0.2),
+        0 0 20px rgba(160, 217, 239, 0.3);
+    transform: scale(1.02);
+    background: rgba(34, 34, 34, 0.8);
+}
+
+/* Futuristic buttons */
+button {
+    width: 50%;
+    padding: 1rem;
+    margin: 0.5rem auto 1rem auto; /* 👈 this centers the button */
+    border-radius: 12px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 700;
+    cursor: pointer;
+    background: linear-gradient(135deg, #a0d9ef 0%, #7ac7e8 100%);
+    color: #111;
+    position: relative;
+    overflow: hidden;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 4px 20px rgba(160, 217, 239, 0.3);
+}
+
+
+button:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 30px rgba(160, 217, 239, 0.5);
+    background: linear-gradient(135deg, #7ac7e8 0%, #a0d9ef 100%);
+}
+
+button:active {
+    transform: translateY(0);
+    box-shadow: 0 4px 20px rgba(160, 217, 239, 0.3);
+}
+
+/* Button ripple effect */
+button::after {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: 0;
+    height: 0;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.3);
+    transform: translate(-50%, -50%);
+    transition: width 0.6s, height 0.6s;
+}
+
+button:active::after {
+    width: 300px;
+    height: 300px;
+}
+
+/* Enhanced links */
+a {
+    color: #a0d9ef;
+    text-decoration: none;
+    margin-right: 1rem;
+    position: relative;
+    transition: all 0.3s ease;
+    font-weight: 500;
+}
+
+a::after {
+    content: '';
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    width: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #a0d9ef, #7ac7e8);
+    transition: width 0.3s ease;
+}
+
+a:hover::after {
+    width: 100%;
+}
+
+a:hover {
+    color: #ffffff;
+    text-shadow: 0 0 10px rgba(160, 217, 239, 0.8);
+}
+
+.user-icon__links {
+    display: flex;
+    justify-content: center;
+    gap: 2rem;
+    flex-wrap: wrap;
+}
+
+/* List items enhancement */
+li {
+    background: rgba(160, 217, 239, 0.05);
+    border: 1px solid rgba(160, 217, 239, 0.1);
+    border-radius: 12px;
+    padding: 1.5rem;
+    margin: 1rem 0;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+li:hover {
+    background: rgba(160, 217, 239, 0.1);
+    border-color: rgba(160, 217, 239, 0.3);
+    transform: translateX(5px);
+    box-shadow: 0 5px 20px rgba(160, 217, 239, 0.2);
+}
+.booking-message {
+  position: fixed;
+  top: 20px;
+  left: 50%;
+  transform: translateX(-50%);
+  min-width: 300px;
+  max-width: 80vw;
+  padding: 1rem 2rem;
+  border-radius: 10px;
+  font-size: 1.2rem;
+  text-align: center;
+  z-index: 1000;
+  opacity: 0;
+  animation: fadeInOut 2.5s forwards;
+  box-shadow: 0 2px 16px rgba(0,0,0,0.15);
+}
+.booking-message.success {
+  background: #4caf50;
+  color: #fff;
+}
+.booking-message.error {
+  background: #ff5252;
+  color: #fff;
+}
+.booking-item {
+  background: #222e3c;
+  border-radius: 12px;
+  padding: 1.2rem 1.5rem;
+  margin-bottom: 1.2rem;
+  color: #a0d9ef;
+  list-style: none;
+  box-shadow: 0 2px 12px rgba(160, 217, 239, 0.08);
+}
+.booking-item div {
+  margin-bottom: 0.5rem;
+}
+@keyframes fadeInOut {
+  0% { opacity: 0; transform: translateX(-50%) scale(0.95);}
+  10% { opacity: 1; transform: translateX(-50%) scale(1);}
+  90% { opacity: 1; }
+  100% { opacity: 0; transform: translateX(-50%) scale(0.95);}
+}
+/* Loading animation */
+@keyframes pulse {
+    0% { opacity: 1; }
+    50% { opacity: 0.5; }
+    100% { opacity: 1; }
+}
+
+.loading {
+    animation: pulse 1.5s ease-in-out infinite;
+}
+
+/* Scroll indicator */
+body::-webkit-scrollbar {
+    width: 8px;
+}
+
+body::-webkit-scrollbar-track {
+    background: rgba(160, 217, 239, 0.1);
+}
+
+body::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, #a0d9ef, #7ac7e8);
+    border-radius: 4px;
+}
+
+body::-webkit-scrollbar-thumb:hover {
+    background: linear-gradient(180deg, #7ac7e8, #a0d9ef);
+}
+
+/* Responsive design with animations */
+@media (max-width: 600px) {
+    form, .user-icon, .timezone-filter, .bookings-list, .classes-list {
+        padding: 1.5rem 1rem;
+        max-width: 95vw;
+        margin: 0.5rem auto;
+    }
+    
+    h1, h2, h3 {
+        font-size: 1.3rem;
+    }
+    
+    .user-icon__links {
+        gap: 1rem;
+    }
+    
+    body::before {
+        background-size: 150px 75px;
+    }
+}
+
+/* Special animation for success/error messages */
+.message-enter {
+    animation: messageSlideIn 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+@keyframes messageSlideIn {
+    0% {
+        opacity: 0;
+        transform: translateY(-20px) scale(0.9);
+    }
+    50% {
+        opacity: 0.8;
+        transform: translateY(-5px) scale(1.05);
+    }
+    100% {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+    }
+}
+
+/* Micro-interactions for better UX */
+input:valid {
+    border-color: rgba(0, 204, 102, 0.5);
+}
+
+input:invalid:not(:placeholder-shown) {
+    border-color: rgba(255, 99, 99, 0.5);
+}
+
+/* Focus-within effects for containers */
+form:focus-within, .timezone-filter:focus-within {
+    border-color: rgba(160, 217, 239, 0.5);
+    box-shadow: 
+        0 8px 32px rgba(0, 0, 0, 0.4),
+        0 0 0 1px rgba(160, 217, 239, 0.3),
+        inset 0 1px 0 rgba(255, 255, 255, 0.1);
+}
