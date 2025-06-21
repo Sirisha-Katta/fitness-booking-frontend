@@ -73,3 +73,4 @@ my-react-frontend
 
 Feel free to submit issues or pull requests for any improvements or bug fixes.# fitness_booking_frontend
 # fitness_booking_frontend
+# fitness-booking-frontend
