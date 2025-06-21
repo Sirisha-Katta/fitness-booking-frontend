@@ -94,11 +94,14 @@ const ClassesList = ({ user }) => {
 
         try {
             await bookClass({
-                name: user.name,
-                email: user.email,
-                class_id: classItem.class_id,
-                timezone: timezone // Include timezone in booking request
-            });
+            name: user.name,
+            email: user.email,
+            class_id: classItem.class_id,
+            timezone: timezone, // Include timezone in booking request
+            datetime: classItem.datetime, // <-- Add this line!
+            instructor: classItem.instructor, // (optional, if your backend expects it)
+            class_name: classItem.name       // (optional, if your backend expects it)
+        });
             
             setBookingMsg(`Successfully booked ${classItem.name}!`);
             setBookingStatus('success');

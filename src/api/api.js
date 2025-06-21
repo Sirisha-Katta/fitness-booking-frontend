@@ -41,7 +41,10 @@ export const bookClass = async (bookingData) => {
                 name: bookingData.name,
                 email: bookingData.email,
                 class_id: bookingData.class_id,
-                timezone: bookingData.timezone || 'Asia/Kolkata'
+                timezone: bookingData.timezone || 'Asia/Kolkata',
+                datetime: bookingData.datetime, // <-- Add this line
+                instructor: bookingData.instructor, // optional
+                class_name: bookingData.class_name // optional
             }),
         });
 

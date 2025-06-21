@@ -26,11 +26,10 @@ const BookingsPage = ({ userEmail, timezone = 'Asia/Kolkata' }) => {
 
     // Example for ClassesList.jsx and BookingsPage.jsx
 
-function formatDateTime(dateStr) {
+function formatDateTime(dateStr, timezone) {
   // dateStr is in "DD/MM/YYYY HH:mm:ss"
   const [datePart, timePart] = dateStr.split(' ');
   const [day, month, year] = datePart.split('/');
-  // JS Date: new Date(year, monthIndex, day, hour, minute, second)
   const [hour, minute, second] = timePart.split(':');
   const date = new Date(
     Number(year),
@@ -40,8 +39,17 @@ function formatDateTime(dateStr) {
     Number(minute),
     Number(second)
   );
-  // Format as you wish, e.g. toLocaleString()
-  return date.toLocaleString();
+  // Use the booking's timezone for formatting
+  return new Intl.DateTimeFormat('en-US', {
+    year: 'numeric',
+    month: 'short',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false,
+    timeZone: timezone || 'Asia/Kolkata'
+  }).format(date);
 }
     if (!userEmail) {
         return <div>Please log in to view your bookings.</div>;
@@ -63,8 +71,7 @@ function formatDateTime(dateStr) {
                         <strong>Class:</strong> {booking.class_name}
                         </div>
                         <div>
-                        <strong>Date & Time:</strong> {formatDateTime(booking.datetime, booking.timezone)}
-                        </div>
+                        <strong>Date & Time:</strong> {formatDateTime(booking.datetime, booking.timezone)}                        </div>
                         <div>
                         <strong>Instructor:</strong> {booking.instructor}
                         </div>
