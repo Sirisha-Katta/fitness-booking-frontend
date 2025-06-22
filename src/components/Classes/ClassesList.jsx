@@ -1,4 +1,4 @@
-import React, { useEffect, useState,useRef } from 'react';
+import { useEffect, useState,useRef } from 'react';
 import { fetchClasses, fetchUserBookings } from '../../api/api';
 import TimezoneFilter from '../TimezoneFilter';
 import { bookClass } from '../../api/api';
@@ -19,11 +19,7 @@ const ClassesList = ({ user }) => {
         setBookingStatus('');
         if (msgTimeout.current) clearTimeout(msgTimeout.current);
     };
-    const originalZone = "Asia/Kolkata"; // or wherever your class times are defined
-    const dt = DateTime.fromFormat(classItem.datetime, "dd/MM/yyyy HH:mm:ss", { zone: originalZone })
-        .setZone(timezone, { keepLocalTime: true }); // keepLocalTime: true means "interpret this time as local in the new zone"
-    const isoDatetime = dt.toISO();
-
+    const now = new Date();
     // Function to check if a class is already booked by the user in the current timezone
     const isClassBooked = (classItem) => {
         if (!user || !user.email) return false;
@@ -65,19 +61,18 @@ const ClassesList = ({ user }) => {
         getData();
     }, [timezone, user]);
 
-    const formatDateTime = (isoString, timezone) => {
-        const date = new Date(isoString);
-        return new Intl.DateTimeFormat('en-GB', {
-            day: '2-digit',
-            month: '2-digit',
-            year: 'numeric',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false,
-            timeZone: timezone,
-        }).format(date);
-    };
+
+const formatDateTime = (isoString, timezone) => {
+    try {
+        return DateTime.fromISO(isoString, { zone: 'utc' })
+            .setZone(timezone)
+            .toFormat("dd/MM/yyyy HH:mm:ss");
+    } catch (err) {
+        console.error("Date formatting error:", err);
+        return isoString;
+    }
+};
+
 
     const handleBookClass = async (classItem) => {
     setBookingMsg('');
@@ -95,14 +90,18 @@ const ClassesList = ({ user }) => {
         setBookingStatus('error');
         return;
     }
-
+    console.log('classItem.datetime:', classItem.datetime, 'timezone:', timezone);
+    // const originalZone = "Asia/Kolkata"; // or wherever your class times are defined
+    // const dt = DateTime.fromFormat(classItem.datetime, "dd/MM/yyyy HH:mm:ss", { zone: originalZone })
+    //     .setZone(timezone, { keepLocalTime: true }); // keepLocalTime: true means "interpret this time as local in the new zone"
+    // const isoDatetime = dt.toISO();
     // Log the booking data being sent
         const bookingPayload = {
         name: user.name,
         email: user.email,
         class_id: classItem.class_id,
         timezone: timezone,
-        datetime: isoDatetime, // <-- send ISO string in selected timezone
+        datetime: classItem.datetime, // <-- send ISO string in selected timezone
         instructor: classItem.instructor,
         class_name: classItem.name
     };
@@ -156,6 +155,11 @@ const ClassesList = ({ user }) => {
             <ul className="classes-list__items" style={{ paddingInline: 0 }}>
                 {classes
                 .filter(classItem => classItem.available_slots > 0) 
+                .filter(classItem => {
+                const classTime = new Date(classItem.datetime);
+                return classTime > now; // ✅ Only show future classes
+            })
+
                 .map((classItem) => {
                     const isBooked = isClassBooked(classItem);
                     
