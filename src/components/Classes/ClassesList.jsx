@@ -76,59 +76,65 @@ const ClassesList = ({ user }) => {
     };
 
     const handleBookClass = async (classItem) => {
-        setBookingMsg('');
-        setBookingStatus('');
-        
-        if (!user || !user.name || !user.email) {
-            setBookingMsg('Please log in to book a class.');
-            setBookingStatus('error');
-            return;
-        }
+    setBookingMsg('');
+    setBookingStatus('');
+    
+    if (!user || !user.name || !user.email) {
+        setBookingMsg('Please log in to book a class.');
+        setBookingStatus('error');
+        return;
+    }
 
-        // Check if already booked in this timezone
-        if (isClassBooked(classItem)) {
-            setBookingMsg('You have already booked this class in this timezone.');
-            setBookingStatus('error');
-            return;
-        }
+    // Check if already booked in this timezone
+    if (isClassBooked(classItem)) {
+        setBookingMsg('You have already booked this class in this timezone.');
+        setBookingStatus('error');
+        return;
+    }
 
-        try {
-            await bookClass({
-            name: user.name,
-            email: user.email,
-            class_id: classItem.class_id,
-            timezone: timezone, // Include timezone in booking request
-            datetime: classItem.datetime, // <-- Add this line!
-            instructor: classItem.instructor, // (optional, if your backend expects it)
-            class_name: classItem.name       // (optional, if your backend expects it)
-        });
-            
-            setBookingMsg(`Successfully booked ${classItem.name}!`);
-            setBookingStatus('success');
-            
-            // Update local state to reflect the new booking
-            const newBooking = {
-                class_id: classItem.class_id,
-                client_email: user.email,
-                timezone: timezone,
-                class_name: classItem.name,
-                datetime: classItem.datetime,
-                instructor: classItem.instructor
-            };
-            setUserBookings(prev => [...prev, newBooking]);
-            
-            // Update available slots locally
-            setClasses(prev => prev.map(cls => 
-                cls.class_id === classItem.class_id 
-                    ? { ...cls, available_slots: cls.available_slots - 1 }
-                    : cls
-            ));
-            
-        } catch (err) {
-            setBookingMsg('Class is already been booked!');
-            setBookingStatus('error');
-        }
+    // Log the booking data being sent
+    const bookingPayload = {
+        name: user.name,
+        email: user.email,
+        class_id: classItem.class_id,
+        timezone: timezone,
+        datetime: classItem.datetime,
+        instructor: classItem.instructor,
+        class_name: classItem.name
     };
+    console.log('Booking payload:', bookingPayload);
+
+    try {
+        const response = await bookClass(bookingPayload);
+        console.log('Booking response:', response);
+
+        setBookingMsg(`Successfully booked ${classItem.name}!`);
+        setBookingStatus('success');
+        
+        // Update local state to reflect the new booking
+        const newBooking = {
+            class_id: classItem.class_id,
+            client_email: user.email,
+            timezone: timezone,
+            class_name: classItem.name,
+            datetime: classItem.datetime,
+            instructor: classItem.instructor
+        };
+        setUserBookings(prev => [...prev, newBooking]);
+        
+        // Update available slots locally
+        setClasses(prev => prev.map(cls => 
+            cls.class_id === classItem.class_id 
+                ? { ...cls, available_slots: cls.available_slots - 1 }
+                : cls
+        ));
+        
+    } catch (err) {
+        setBookingMsg('Class is already been booked!');
+        setBookingStatus('error');
+        console.error('Booking error:', err);
+    }
+};
 
     if (loading) return <div className="loading">Loading classes...</div>;
     if (error) return <div className="error-message">Error: {error}</div>;
