@@ -2,6 +2,7 @@ import React, { useEffect, useState,useRef } from 'react';
 import { fetchClasses, fetchUserBookings } from '../../api/api';
 import TimezoneFilter from '../TimezoneFilter';
 import { bookClass } from '../../api/api';
+import { DateTime } from "luxon";
 
 const ClassesList = ({ user }) => {
     const [classes, setClasses] = useState([]);
@@ -18,7 +19,11 @@ const ClassesList = ({ user }) => {
         setBookingStatus('');
         if (msgTimeout.current) clearTimeout(msgTimeout.current);
     };
+    const originalZone = "Asia/Kolkata"; // or wherever your class times are defined
+    const dt = DateTime.fromFormat(classItem.datetime, "dd/MM/yyyy HH:mm:ss", { zone: originalZone })
+        .setZone(timezone); // convert to selected timezone
 
+    const isoDatetime = dt.toISO(); 
 
     // Function to check if a class is already booked by the user in the current timezone
     const isClassBooked = (classItem) => {
@@ -93,12 +98,12 @@ const ClassesList = ({ user }) => {
     }
 
     // Log the booking data being sent
-    const bookingPayload = {
+        const bookingPayload = {
         name: user.name,
         email: user.email,
         class_id: classItem.class_id,
         timezone: timezone,
-        datetime: classItem.datetime,
+        datetime: isoDatetime, // <-- send ISO string in selected timezone
         instructor: classItem.instructor,
         class_name: classItem.name
     };
