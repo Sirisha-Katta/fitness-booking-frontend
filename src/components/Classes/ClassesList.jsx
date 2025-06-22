@@ -21,9 +21,8 @@ const ClassesList = ({ user }) => {
     };
     const originalZone = "Asia/Kolkata"; // or wherever your class times are defined
     const dt = DateTime.fromFormat(classItem.datetime, "dd/MM/yyyy HH:mm:ss", { zone: originalZone })
-        .setZone(timezone); // convert to selected timezone
-
-    const isoDatetime = dt.toISO(); 
+        .setZone(timezone, { keepLocalTime: true }); // keepLocalTime: true means "interpret this time as local in the new zone"
+    const isoDatetime = dt.toISO();
 
     // Function to check if a class is already booked by the user in the current timezone
     const isClassBooked = (classItem) => {
