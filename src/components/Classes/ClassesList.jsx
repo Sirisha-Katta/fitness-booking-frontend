@@ -91,17 +91,12 @@ const formatDateTime = (isoString, timezone) => {
         return;
     }
     console.log('classItem.datetime:', classItem.datetime, 'timezone:', timezone);
-    // const originalZone = "Asia/Kolkata"; // or wherever your class times are defined
-    // const dt = DateTime.fromFormat(classItem.datetime, "dd/MM/yyyy HH:mm:ss", { zone: originalZone })
-    //     .setZone(timezone, { keepLocalTime: true }); // keepLocalTime: true means "interpret this time as local in the new zone"
-    // const isoDatetime = dt.toISO();
-    // Log the booking data being sent
         const bookingPayload = {
         name: user.name,
         email: user.email,
         class_id: classItem.class_id,
         timezone: timezone,
-        datetime: classItem.datetime, // <-- send ISO string in selected timezone
+        datetime: classItem.datetime, 
         instructor: classItem.instructor,
         class_name: classItem.name
     };
@@ -157,7 +152,7 @@ const formatDateTime = (isoString, timezone) => {
                 .filter(classItem => classItem.available_slots > 0) 
                 .filter(classItem => {
                 const classTime = new Date(classItem.datetime);
-                return classTime > now; // ✅ Only show future classes
+                return classTime > now; 
             })
 
                 .map((classItem) => {

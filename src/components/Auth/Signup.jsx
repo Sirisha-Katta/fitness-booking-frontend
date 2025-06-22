@@ -19,7 +19,7 @@ const Signup = ({ setUser }) => {
         }
         try {
             await signup({ email, password, name });
-            setUser({ name, email }); // <-- Set user in App state
+            setUser({ name, email }); 
             setSuccess("Signup successful! Redirecting...");
             setError('');
             setTimeout(() => {
@@ -44,7 +44,6 @@ const Signup = ({ setUser }) => {
                 alignItems: 'center'
             }}
         >
-            {/* <h2>Signup</h2> */}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit}>
                 <div>

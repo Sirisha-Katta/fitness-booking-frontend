@@ -43,9 +43,9 @@ export const bookClass = async (bookingData) => {
                 email: bookingData.email,
                 class_id: bookingData.class_id,
                 timezone: bookingData.timezone || 'Asia/Kolkata',
-                datetime: bookingData.datetime, // <-- Add this line
-                instructor: bookingData.instructor, // optional
-                class_name: bookingData.class_name // optional
+                datetime: bookingData.datetime, 
+                instructor: bookingData.instructor, 
+                class_name: bookingData.class_name 
             }),
         });
 
@@ -71,7 +71,6 @@ export const fetchBookings = async (email) => {
     }
 };
 
-// Add this function to your api.js file
 
 export const fetchUserBookings = async (email) => {
     try {
@@ -84,7 +83,7 @@ export const fetchUserBookings = async (email) => {
 
         if (!response.ok) {
             if (response.status === 404) {
-                return []; // Return empty array if no bookings found
+                return []; 
             }
             throw new Error(`Failed to fetch user bookings: ${response.status}`);
         }

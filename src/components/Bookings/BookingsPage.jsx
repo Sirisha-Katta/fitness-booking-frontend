@@ -12,7 +12,7 @@ const BookingsPage = ({ userEmail, timezone = 'Asia/Kolkata' }) => {
             setError('');
             try {
                 const data = await fetchBookings(userEmail);
-                console.log('Fetched bookings:', data); // <-- ADD THIS LINE
+                console.log('Fetched bookings:', data); 
                 setBookings(data);
             } catch (err) {
                 setError('Failed to fetch bookings.');
@@ -25,19 +25,13 @@ const BookingsPage = ({ userEmail, timezone = 'Asia/Kolkata' }) => {
         }
     }, [userEmail]);
 
-    // Example for ClassesList.jsx and BookingsPage.jsx
-
 function formatDateTime(dateStr) {
     if (!dateStr) return '';
-    // If already in "DD/MM/YYYY HH:mm:ss" format, just return it
     if (/^\d{2}\/\d{2}\/\d{4}[, ]/.test(dateStr)) {
         return dateStr;
     }
-    // If ISO string, format as DD/MM/YYYY, HH:mm:ss
-    // Remove timezone offset if present
     let [datePart, timePart] = dateStr.split('T');
-    if (!timePart) return dateStr; // fallback
-    // Remove timezone info from time part (split at + or -)
+    if (!timePart) return dateStr; 
     timePart = timePart.split('+')[0].split('-')[0];
     const [year, month, day] = datePart.split('-');
     return `${day}/${month}/${year}, ${timePart}`;

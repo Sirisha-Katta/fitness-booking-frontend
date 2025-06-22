@@ -11,8 +11,8 @@ const Login = ({ onLogin }) => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const userData = await login({ email, password }); // userData has { email, name }
-            onLogin(userData); // Pass both name and email to App state
+            const userData = await login({ email, password }); 
+            onLogin(userData); 
             history.push('/classes');
         } catch (err) {
             setError('Login failed. Please check your credentials.');
@@ -33,7 +33,6 @@ const Login = ({ onLogin }) => {
                 alignItems: 'center'
             }}
         >
-            {/* <h2 style={{ textTransform: 'uppercase' }}>Login</h2> */}
             {error && <p style={{ color: 'red' }}>{error}</p>}
             <form onSubmit={handleSubmit} style={{ width: '100%' }}>
                 <div>

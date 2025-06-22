@@ -11,7 +11,6 @@ const timezones = [
 const TimezoneFilter = ({ selectedTimezone, onTimezoneChange }) => {
     return (
         <div style={{ marginBottom: '1rem' }}>
-            {/* <label htmlFor="timezone-select">Select Timezone:</label> */}
             <select
                 id="timezone-select"
                 value={selectedTimezone}
