@@ -54,22 +54,22 @@ const UserIcon = ({ user }) => {
         textAlign: 'center',  
         letterSpacing: '0.5px'  
     }}
-    onMouseEnter={(e) => {
-        e.target.style.color = '#ffffff';
-        e.target.style.textShadow = '0 0 15px rgba(160, 217, 239, 0.9)'; 
-        e.target.style.background = 'rgba(160, 217, 239, 0.25)';  
-        e.target.style.transform = 'translateY(-3px) scale(1.05)';  
-        e.target.style.boxShadow = '0 8px 25px rgba(160, 217, 239, 0.4)';  
-        e.target.style.border = '2px solid rgba(160, 217, 239, 0.6)';  
-    }}
-    onMouseLeave={(e) => {
-        e.target.style.color = '#a0d9ef';
-        e.target.style.textShadow = 'none';
-        e.target.style.background = 'rgba(160, 217, 239, 0.1)';
-        e.target.style.transform = 'translateY(0) scale(1)';
-        e.target.style.boxShadow = 'none';
-        e.target.style.border = '2px solid rgba(160, 217, 239, 0.3)';
-    }}
+    // onMouseEnter={(e) => {
+    //     e.target.style.color = '#ffffff';
+    //     e.target.style.textShadow = '0 0 15px rgba(160, 217, 239, 0.9)'; 
+    //     e.target.style.background = 'rgba(160, 217, 239, 0.25)';  
+    //     e.target.style.transform = 'translateY(-3px) scale(1.05)';  
+    //     e.target.style.boxShadow = '0 8px 25px rgba(160, 217, 239, 0.4)';  
+    //     e.target.style.border = '2px solid rgba(160, 217, 239, 0.6)';  
+    // }}
+    // onMouseLeave={(e) => {
+    //     e.target.style.color = '#a0d9ef';
+    //     e.target.style.textShadow = 'none';
+    //     e.target.style.background = 'rgba(160, 217, 239, 0.1)';
+    //     e.target.style.transform = 'translateY(0) scale(1)';
+    //     e.target.style.boxShadow = 'none';
+    //     e.target.style.border = '2px solid rgba(160, 217, 239, 0.3)';
+    // }}
 >
     Bookings
 </Link>
